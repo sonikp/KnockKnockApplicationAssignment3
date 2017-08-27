@@ -17,18 +17,19 @@ import javax.swing.JTextArea;
 public class KK_ServerAppGUI extends JFrame implements ActionListener {	
 	
 
-	private static final long serialVersionUID = 1L; // added: The serializable class KK_ClientGUI_App does not declare a static final serialVersionUID field of type long
+	private static final long serialVersionUID = 1L; 
+	// added: The serializable class KK_ServerAppGUI does not declare a static final serialVersionUID field of type long
+	
 	// swing components
 	private JButton stopStart;
 	private JTextArea event;	
 	private JPanel north;
+	
 	// server object
 	private KK_ServerApp server;
 	private int portKK = 4444;
 	
-	
-//	private JTextField serverTextField;	// inputs message from user
-//	private JTextArea displayAreaServer;
+
 	
 	
 	// server constructor that receive the port to listen to for connection as parameter
@@ -61,6 +62,7 @@ public class KK_ServerAppGUI extends JFrame implements ActionListener {
 		add(eventPanel);
 		
 		setSize(450, 400);	
+		setLocation(360, 400);
 		setVisible(true);
 
 	}

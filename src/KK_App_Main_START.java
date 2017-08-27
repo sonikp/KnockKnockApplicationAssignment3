@@ -1,32 +1,30 @@
 
-
-
+	/**
+	 * UCSD Java IV - Assignment 3
+	 * 
+	 */
 
 
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-//import javax.swing.JLabel;
-//import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
-
 import java.io.IOException;
-//import java.net.SocketException;
-//import java.util.concurrent.ExecutionException;
+
 
 
 public class KK_App_Main_START extends JFrame {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 1L; 
+	// added: The serializable class KK_App_Main_START does not declare a static final serialVersionUID field of type long
+	
 	// application objects
 	private KK_ServerAppGUI serverapp; 
 	private KK_ClientGUI_App kkclientapp;
@@ -107,7 +105,6 @@ public class KK_App_Main_START extends JFrame {
 				try {
 					startClient();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -127,7 +124,6 @@ public class KK_App_Main_START extends JFrame {
 //					shutdownClient = true;
 //					startClient();
 //				} catch (IOException e) {
-//					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
 

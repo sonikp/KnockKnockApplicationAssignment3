@@ -19,7 +19,9 @@ import javax.swing.JTextField;
 
 public class KK_ClientGUI_App extends JFrame  {	
     
-	private static final long serialVersionUID = 1L; // added: The serializable class KK_ClientGUI_App does not declare a static final serialVersionUID field of type long
+	private static final long serialVersionUID = 1L; 
+	// added: The serializable class KK_ClientGUI_App does not declare a static final serialVersionUID field of type long
+	
 	private Socket kkSocket = null;
 	private PrintWriter writeOutput = null;
 	private BufferedReader readInput = null;
@@ -68,7 +70,7 @@ public class KK_ClientGUI_App extends JFrame  {
         // showing the window on the screen
 		setSize(400, 300);
         setVisible(true);
-        setLocationRelativeTo(null);
+        setLocation(1100, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
     	connectToServer();
