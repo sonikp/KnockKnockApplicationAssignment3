@@ -6,6 +6,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * KK_MultiServerThread was supplied as part of this assignment.
+ * This sets up a threads to run for the BufferedReader and PrintWriter
+ * for connecting and sending stream data across a network.
+ * @author notroot
+ *
+ */
+
 public class KK_MultiServerThread extends Thread {
 	private Socket socket = null;
 
@@ -13,6 +21,13 @@ public class KK_MultiServerThread extends Thread {
 		super("KKMultiServerThread");
 		this.socket = socket;
 	}
+	
+	/**
+	 * This thread was constructed using a separate Runnable 
+	 * run object, the Runnable object's run method is called
+	 * to create the input and output stream buffers
+	 * 
+	 */
 
 	public void run() {
 

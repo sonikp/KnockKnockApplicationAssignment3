@@ -8,6 +8,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
 
+/**
+ * KK_ServerProtocol provides the serverside KnockKnock logic.
+ * This provides the initial clue, and the knockknock content.
+ * The KnockKnock data content is stored on a properties file.
+ * Randomization provides a mechanism to ensure uniqueness in the
+ * jokes for each client connection. Additionally the ServerProtocol
+ * also maintains that state logic for each question/response 
+ * sequence.
+ * 
+ * @author notroot
+ *
+ */
+
 public class KK_ServerProtocol {
     
 	//Key for 2nd part of array
@@ -35,7 +48,18 @@ public class KK_ServerProtocol {
     	//get two dimensional array from the properties file that has been delineated
     	knockknockInfo = fetchArrayFromPropFile("knockknockInfo", prop);
     }
-    
+    /**
+     * This is the information output returned to the console window. This
+     * provides information about the server's operations and the uniqueness
+     * for each client connection. The DEBUG statements were removed, however
+     * this also shows the console state of operation of the actual KnockKnock
+     * application. Additionally it performs all the logic and state calculations.
+     * 
+     * @param theInput response received from the client connection
+     * @return output joke response to the client depending on state of joke
+     * @throws FileNotFoundException when properties file is not available
+     * @throws IOException when input/output errors.
+     */
     public String processInput(String theInput) throws FileNotFoundException, IOException {
     	
     	//INFO: demonstrates state by printing out all the knock knock CLUE and ANSWER details

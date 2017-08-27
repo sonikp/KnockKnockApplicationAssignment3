@@ -1,10 +1,4 @@
-
-	/**
-	 * UCSD Java IV - Assignment 3
-	 * 
-	 */
-
-
+// UCSD Java IV - Assignment 3
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,9 +11,20 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.io.IOException;
 
+/**
+ * UCSD Java IV - Assignment 3
+ * 
+ * This application is a client/server multi-threaded application
+ * that connects clients to the server using sockets. The application
+ * starts with an application panel that allows a user to start/stop
+ * the server component. The server starts by creating a serverSocket
+ * listening on a TCP port for clients to connect. This also creates a 
+ * thread pool which allows the clients to connect.
+ * 
+ */
 
 
-public class KK_App_Main_START extends JFrame {
+public class KnockKnock_Application_Main_START extends JFrame {
 	
 
 	private static final long serialVersionUID = 1L; 
@@ -42,8 +47,22 @@ public class KK_App_Main_START extends JFrame {
 	private boolean shutdownClient;
 	private Thread serverThread;
 	
-	// constructor
-	public KK_App_Main_START() throws IOException {
+	
+	/**
+	 * Constructor KnockKnock_Application_Main_START()
+	 * This constructor extends JFrame and sets up the 
+	 * application interface used to start and stop all
+	 * the application components. The KnockKnock Application
+	 * consists of server and client components. This launch
+	 * application allows a user to start/stop the server and 
+	 * client applications.
+	 * 
+	 * @throws IOException throws exception if error connecting to stream
+	 * 
+	 */
+	
+
+	public KnockKnock_Application_Main_START() throws IOException {
 		
 		super("KnockKnock Launch Application");
 		
@@ -141,6 +160,13 @@ public class KK_App_Main_START extends JFrame {
 		setVisible(true);
 	}	// end constructor
 	
+	/**
+	 * startClient() implements the Runnable interface which implements 
+	 * the clients connecting as a thread.
+	 * 
+	 * @throws IOException Throws exception if unable to connect a client
+	 * 
+	 */
 	
 	public void startClient() throws IOException {
 
@@ -198,10 +224,19 @@ public class KK_App_Main_START extends JFrame {
 
 	} 
 	
-	// main method begins
+	/**
+	 * Main Method 'STARTS' the execution of the KnockKnock Application.
+	 * The entire application consists of the application component, 
+	 * server and client applications. The execution of the main KnockKnock
+	 * Application allows a user to start/stop the server and client applications
+	 * and to play this fun and exhilarating KnockKnock game!
+	 * 
+	 * @param args Main Method command line arguments, none implemented
+	 * @throws IOException Throws IOException if stream cannot be written to or closed.
+	 */
 	public static void main(String[] args) throws IOException {
 		
-		KK_App_Main_START application = new KK_App_Main_START();
+		KnockKnock_Application_Main_START application = new KnockKnock_Application_Main_START();
 		application.setLocationRelativeTo(null);
 		application.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}

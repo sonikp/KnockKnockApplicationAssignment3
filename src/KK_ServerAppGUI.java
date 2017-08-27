@@ -11,7 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-
+/**
+ * KK_ServerAppGUI is the UI interface for the main KnockKnock application
+ * used for start/stop of the server and the client application components
+ * 
+ * 
+ * @author notroot
+ *
+ */
 
 
 public class KK_ServerAppGUI extends JFrame implements ActionListener {	
@@ -29,7 +36,13 @@ public class KK_ServerAppGUI extends JFrame implements ActionListener {
 	private KK_ServerApp server;
 	private int portKK = 4444;
 	
-
+	/**
+	 * Constructor for the application sets up the hard-coded TCP port of 4444. 
+	 * Also this sets up the GUI layout and the buttons for launching the
+	 * server and client components.
+	 * 
+	 * @param port hard-coded server side TCP port 4444 for connecting clients
+	 */
 	
 	
 	// server constructor that receive the port to listen to for connection as parameter
@@ -39,6 +52,11 @@ public class KK_ServerAppGUI extends JFrame implements ActionListener {
 		knockKnockServer();
 
 	}	
+	
+	/**
+	 * knockKnockServer() sets up all the GUI layouts, and the
+	 * buttons for the KnockKnock application.
+	 */
 	
 	public void knockKnockServer() {
 		server = null;

@@ -15,6 +15,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * KK_ClientGUI_App creates the clients that connect to the server
+ * TCP port and interface with the server streams for playing the KnockKnock
+ * game
+ * @author notroot
+ *
+ */
 
 
 public class KK_ClientGUI_App extends JFrame  {	
@@ -36,6 +43,17 @@ public class KK_ClientGUI_App extends JFrame  {
 	
 	private final ExecutorService clientProcessingPool;
 	
+	
+	
+	
+	/**
+	 * Constructor creates the client thread pool which will 
+	 * hold and execute the interactions as threads. The constructor 
+	 * created the swing GUI interface for sending and receiving the
+	 * required responses to the KnockKnock game.
+	 * 
+	 * @throws IOException
+	 */
     public KK_ClientGUI_App() throws IOException {
 
     	super("Super Knock-Knock Client");
@@ -78,6 +96,15 @@ public class KK_ClientGUI_App extends JFrame  {
     	
     }
     
+    /**
+     * Method to connect to the server. These values are hard coded, and it
+     * connects to the server running on the local host to the listening
+     * TCP port 4444
+     * 
+     * @port hard-coded TCP port to connect to, on the server-side listening port 4444 
+     * @throws IOException
+     */
+    
     public void connectToServer() throws IOException {
     	
         try {
@@ -94,7 +121,15 @@ public class KK_ClientGUI_App extends JFrame  {
     	
     }
     
-    
+    /**
+     * The getJoke() connects reads from and writes to the stream buffers
+     * When a connection is made to the server, the server instantly responds
+     * with 'Knock Knock'. The connection reads that string and displays 
+     * it to the client applications. The responses are also read from 
+     * the keyboard an transmitted back as a response to the server-side application.
+     * 
+     * @throws IOException
+     */
     public void getJoke() throws IOException {
     	
     	strInput = new BufferedReader(new InputStreamReader(System.in));
@@ -117,7 +152,13 @@ public class KK_ClientGUI_App extends JFrame  {
     	}
 
     }
-    
+    /**
+     * closeConnection() method closes the connection by closing
+     * the write output buffer, and the input read buffers. Finally
+     * the socket is also closed/
+     * 
+     * @throws IOException
+     */
     public void closeConnection() throws IOException {
         writeOutput.close();
         readInput.close();
@@ -125,6 +166,15 @@ public class KK_ClientGUI_App extends JFrame  {
         kkSocket.close();
     }
 	
+    /**
+     * This allows the client to be executed independently of the 
+     * main KnockKnock application. The server must be running and
+     * listening on the port for this client to be able to connect
+     * and access the application.
+     * 
+     * @param args startup arguments, none required
+     * @throws IOException throws and exception if there are any connection issues
+     */
 	public static void main(String[] args) throws IOException {
 		
 		KK_ClientGUI_App client = new KK_ClientGUI_App();
@@ -133,8 +183,15 @@ public class KK_ClientGUI_App extends JFrame  {
 		client.setVisible(true);
 
     }
-
 	
+	
+	/**
+	 * startClient() implements the Runnable interface which implements 
+	 * the clients connecting as a thread.
+	 * 
+	 * @throws IOException Throws exception if unable to connect a client
+	 * 
+	 */
 	public void startClient() throws IOException {
 
 		Runnable clientTask = null;
@@ -152,41 +209,22 @@ public class KK_ClientGUI_App extends JFrame  {
 						client.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						client.setVisible(true);
 
-
 					} catch (IOException e) {
 						System.err.println("Unable to process client request");
 						e.printStackTrace();
 					}
 				}
 			};
-
-
 		}
 		else {
 			System.out.println("!!!enter shutdown mode, shutdownServer = " + shutdownServer);
-			
-//			clientProcessingPool.shutdown();
-			
+
 			try {
 
 				clientProcessingPool.shutdown();
-//				closeConnections();
-				System.out.println("replaced serverSocket.close()");
-
-//				try {
-////					serverSocket.close();
-//				}
-//				catch (SocketException ex) {
-//					System.out.println("enter printstacktrace()");
-//					ex.printStackTrace();
-//				}
-
 			}
-//			catch (SocketException ex) {
-//				ex.printStackTrace();
-//			}
-			finally {
-				
+
+			finally {			
 				// currently empty
 			}
 		}
@@ -195,16 +233,5 @@ public class KK_ClientGUI_App extends JFrame  {
 		serverThread.start();
 
 	} 
-	public void closeConnections() throws IOException {
-		
-		System.out.println("closeConnections()");
-//		writeOutput.close();
-//		readInput.close();
-//		strInput.close();
-//		kkSocket.close();
-//		System.exit(0);
-	
-//		serverSocket.close();
-	}
 	
 }

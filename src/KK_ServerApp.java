@@ -1,12 +1,20 @@
 
 
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * KK_ServerApp is the application logic for the main KnockKnock application.
+ * This starts the KnockKnock application, sets up the listening port, the 
+ * serverSockets for accepting the client connections and the applicatin GUI
+ * object. 
+ * 
+ * @author notroot
+ *
+ */
 
 
 public class KK_ServerApp {
@@ -24,6 +32,12 @@ public class KK_ServerApp {
 		this.port = port;
 		timeDateStamp = new SimpleDateFormat("HH:mm:ss");
 	}
+	
+	/**
+	 * startKnockKnock() starts by setting listening tag to ensure the
+	 * continuous while loop maintains a listening state for incoming connections
+	 * 
+	 */
 
 	public void startKnockKnock() {
 			
@@ -86,8 +100,13 @@ public class KK_ServerApp {
 		}
 	}
 	
-
-	//For the GUI to stop the server
+	/**
+	 * For the GUI to stop the server. Creates
+	 * a port to listen back to itself. I know this is
+	 * not the best way to do this, but for the purposes of
+	 * the assignment deadline served a purpose. 
+	 * 
+	 */
 	@SuppressWarnings("resource")
 	protected void stop() {
 		listenForConnections = false;
@@ -99,8 +118,12 @@ public class KK_ServerApp {
 			e.printStackTrace();
 		}
 	}
-
-	// Display an event (not a message) to the event window
+	
+	/**
+	 * Display an event (not a message) to the event window, includes
+	 * a timestamp when the even occurred.
+	 * @param message - displayed in the event window
+	 */
 	private void display(String message) {
 		String time = timeDateStamp.format(new Date()) + " " + message;
 		if(serverGUI == null)
