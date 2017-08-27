@@ -91,13 +91,20 @@ public class KK_ServerAppGUI extends JFrame implements ActionListener {
 		event.setCaretPosition(event.getText().length() - 1);	
 		
 	}
-	
-	// start or stop where clicked
+	/**
+	 * Action performed when start or stop where clicked.
+	 * If running we have to stop.
+	 */
 	public void actionPerformed(ActionEvent e) {
-		// if running we have to stop
+		
 		serverStartStop();
 	}
 	
+	/**
+	 * The mechanism for starting /  stopping the service. 
+	 * If starting creates a new server object
+	 * If stopping calls the stop() method.
+	 */
 	public void serverStartStop() {
 		
 		if(server != null) {
@@ -115,8 +122,14 @@ public class KK_ServerAppGUI extends JFrame implements ActionListener {
 		
 	}
 	
+	/**
+	 * Server threads for running the KnockKnock server in a thread
+	 * 
+	 * @author notroot
+	 *
+	 */
 
-	// server thread
+
 	class ServerRunning extends Thread {
 		public void run() {
 			server.startKnockKnock();

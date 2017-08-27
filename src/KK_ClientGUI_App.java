@@ -52,7 +52,7 @@ public class KK_ClientGUI_App extends JFrame  {
 	 * created the swing GUI interface for sending and receiving the
 	 * required responses to the KnockKnock game.
 	 * 
-	 * @throws IOException
+	 * @throws IOException for any input / output issues setting up the client constructor
 	 */
     public KK_ClientGUI_App() throws IOException {
 
@@ -101,8 +101,7 @@ public class KK_ClientGUI_App extends JFrame  {
      * connects to the server running on the local host to the listening
      * TCP port 4444
      * 
-     * @port hard-coded TCP port to connect to, on the server-side listening port 4444 
-     * @throws IOException
+     * @throws IOException for any connection issues to the streams
      */
     
     public void connectToServer() throws IOException {
@@ -128,7 +127,7 @@ public class KK_ClientGUI_App extends JFrame  {
      * it to the client applications. The responses are also read from 
      * the keyboard an transmitted back as a response to the server-side application.
      * 
-     * @throws IOException
+     * @throws IOException for any connection issues communicating to server
      */
     public void getJoke() throws IOException {
     	
@@ -155,9 +154,9 @@ public class KK_ClientGUI_App extends JFrame  {
     /**
      * closeConnection() method closes the connection by closing
      * the write output buffer, and the input read buffers. Finally
-     * the socket is also closed/
+     * the socket is also closed. 
      * 
-     * @throws IOException
+     * @throws IOException for any issues closing the buffers, streams, sockets
      */
     public void closeConnection() throws IOException {
         writeOutput.close();

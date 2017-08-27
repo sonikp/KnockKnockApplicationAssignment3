@@ -39,6 +39,14 @@ public class KK_ServerProtocol {
     private SecureRandom rand = new SecureRandom();
     private int currentJoke = rand.nextInt(19);			
      
+    /**
+     * Constructor uses a properties file for storing and sharing the
+     * knock knock jokes. These are read from a file and using comma 
+     * delimiters, are arranged into a double array for both CLUE's and 
+     * ANSWERS
+     * @throws FileNotFoundException when properties file is not found
+     * @throws IOException when input / output issus
+     */
     public KK_ServerProtocol() throws FileNotFoundException, IOException {
  
     	//get properties file

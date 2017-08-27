@@ -25,7 +25,14 @@ public class KK_ServerApp {
 	private boolean listenForConnections;
 	private ServerSocket serverSocket = null;
 	
-	// server constructor that receive the port to listen to for connection as parameter in console
+	/**
+	 * KK_ServerApp constructor that receive the port to listen to for connection as parameter in console
+	 * 
+	 * @param port server side listening TCP port
+	 * @param serverGUI setup serverGUI object with the connection logic 
+	 * 
+	 */
+	 
 	public KK_ServerApp(int port, KK_ServerAppGUI serverGUI) {	
 		
 		this.serverGUI = serverGUI;
@@ -66,7 +73,7 @@ public class KK_ServerApp {
 				clientConnectCount++;
 
 				
-				new KK_MultiServerThread(serverSocket.accept()).start();
+				new KK_ServerMultiThread(serverSocket.accept()).start();
 				
 				// if I was asked to stop
 				if(!listenForConnections)
@@ -88,7 +95,12 @@ public class KK_ServerApp {
 			display(message);
 		}
 	}
-	
+	/**
+	 * Sets up the socket connection for the application server, listens on port 4444
+	 * 
+	 *
+	 * @throws IOException if any input/output connection issuse
+	 */
 	public void serverConnection() throws IOException {
 
 		try {
@@ -101,11 +113,10 @@ public class KK_ServerApp {
 	}
 	
 	/**
-	 * For the GUI to stop the server. Creates
-	 * a port to listen back to itself. I know this is
-	 * not the best way to do this, but for the purposes of
-	 * the assignment deadline served a purpose. 
-	 * 
+	 * For the GUI to stop the server. Creates a port to listen back to itself. I know 
+	 * this is not the best way to do this, but for the purposes of the assignment 
+	 * deadline served a purpose.
+	 *  
 	 */
 	@SuppressWarnings("resource")
 	protected void stop() {

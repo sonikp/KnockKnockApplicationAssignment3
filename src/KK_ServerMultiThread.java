@@ -14,10 +14,17 @@ import java.net.Socket;
  *
  */
 
-public class KK_MultiServerThread extends Thread {
+public class KK_ServerMultiThread extends Thread {
 	private Socket socket = null;
-
-	public KK_MultiServerThread(Socket socket) {
+	
+	/**
+	 * Constructor creates a multi-threaded server application
+	 * using buffered stream PrintWriter and BufferedReader to 
+	 * accept input from the socket receiving the output stream
+	 * 
+	 * @param socket creates a server socket connection
+	 */
+	public KK_ServerMultiThread(Socket socket) {
 		super("KKMultiServerThread");
 		this.socket = socket;
 	}
