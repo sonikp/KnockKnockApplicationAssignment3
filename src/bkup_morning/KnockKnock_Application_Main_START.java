@@ -1,4 +1,4 @@
-package bkup;
+package bkup_morning;
 // UCSD Java IV - Assignment 3
 
 import javax.swing.JButton;
@@ -32,8 +32,9 @@ public class KnockKnock_Application_Main_START extends JFrame {
 	// added: The serializable class KK_App_Main_START does not declare a static final serialVersionUID field of type long
 	
 	// application objects
-	private KK_ServerAppGUI serverapp; 
+	private KK_ServerAppGUI serverappGUI; 
 	private KK_ClientGUI_App kkclientapp;
+	private KK_ServerApp serverapp;
 	
 	// swing components starting the Knock Knock server application
 	private final JPanel startServerJPanel;
@@ -94,8 +95,8 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				startClientJButton.setEnabled(true);
 				stopClientJButton.setEnabled(true);
 				
-				serverapp = new KK_ServerAppGUI(4444);
-				serverapp.serverStartStop();				
+				serverappGUI = new KK_ServerAppGUI(4444);
+				serverappGUI.serverStartStop();				
 			}
 		});	// end anonymous inner class, and end call to addActionListener
 		
@@ -107,7 +108,7 @@ public class KnockKnock_Application_Main_START extends JFrame {
 			
 				startClientJButton.setEnabled(false);
 				stopClientJButton.setEnabled(false);
-				serverapp.serverStartStop();				
+				serverappGUI.serverStartStop();				
 			}
 		});	// end anonymous inner class, and end call to addActionListener
 		
@@ -123,6 +124,8 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				
 				// starts client application
 				try {
+					shutdownClient = false;
+					System.out.println("Setting shutdownClient = false");
 					startClient();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -139,13 +142,18 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				System.out.println(event);	
 				
 				// starts client application
-//				try {
-//					
-//					shutdownClient = true;
-//					startClient();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
+				try {
+					
+					shutdownClient = true;
+					System.out.println("Setting shutdownClient = " + shutdownClient);
+					startClient();
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				finally {
+					
+				}
 
 				
 
@@ -169,11 +177,13 @@ public class KnockKnock_Application_Main_START extends JFrame {
 	 * 
 	 */
 	
+	@SuppressWarnings({ "deprecation", "static-access" })
 	public void startClient() throws IOException {
 
 		Runnable clientTask = null;
-
+		System.out.println("entering runnable, shutdownClient = " + shutdownClient);
 		if (!shutdownClient) {
+			System.out.println("inside runnable, shutdownClient = " + shutdownClient);
 
 			clientTask = new Runnable() {
 
@@ -182,6 +192,7 @@ public class KnockKnock_Application_Main_START extends JFrame {
 					try {
 						
 						kkclientapp = new KK_ClientGUI_App();
+						//Robert: I had to put this here to create a client object
 
 					} catch (IOException e) {
 						System.err.println("Unable to process client request");
@@ -193,14 +204,34 @@ public class KnockKnock_Application_Main_START extends JFrame {
 
 		}
 		else {
-			System.out.println("!!!enter shutdown mode, shutdownServer = " );	//+ shutdownServer
+			System.out.println("!!!enter shutdown mode, shutdownClient = " + shutdownClient );	//+ shutdownServer
 			
-//			clientProcessingPool.shutdown();
+			serverapp.removeClientConnections();
+			
+			
+			
+			
+			// RB: I need to end runnable
+			
+//			Thread.currentThread().interrupt();
+//			((Thread) clientTask).interrupt();
+//			serverThread.currentThread().interrupt();
+//			kkclientapp.closeConnection();
+			
+			
+
 			
 			try {
 				
-				kkclientapp.closeConnection();
-
+				System.out.println("shutdown mode try { statement");
+				
+				// RB: getting a null pointer exception calling kkclientapp. = because no object
+				// this creates another object
+//				kkclientapp = new KK_ClientGUI_App();
+//				kkclientapp.closeConnection();
+				
+				
+				// RB: very old code 
 //				clientProcessingPool.shutdown();
 //				threadServerController.closeConnections();
 //				System.out.println("replaced serverSocket.close()");
@@ -215,12 +246,14 @@ public class KnockKnock_Application_Main_START extends JFrame {
 
 			}
 			finally {
-				
+				System.out.println("shutdown mode RETURN");
+				System.exit(0);
+				return;
 				// currently empty
 			}
 		}
-
-		serverThread = new Thread(clientTask);
+		System.out.println("start serverThread");
+		serverThread = new Thread(clientTask);	//clientTask
 		serverThread.start();
 
 	} 

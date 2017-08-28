@@ -1,4 +1,4 @@
-package bkup;
+package bkup_morning;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -160,10 +160,13 @@ public class KK_ClientGUI_App extends JFrame  {
      * @throws IOException for any issues closing the buffers, streams, sockets
      */
     public void closeConnection() throws IOException {
+    	System.out.println("entered closeConnection");
         writeOutput.close();
         readInput.close();
         strInput.close();
         kkSocket.close();
+        // violent shutdown
+//        System.exit(0);
     }
 	
     /**
