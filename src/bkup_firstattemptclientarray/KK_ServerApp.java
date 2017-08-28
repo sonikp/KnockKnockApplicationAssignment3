@@ -1,4 +1,4 @@
-package bkup_failed;
+package bkup_firstattemptclientarray;
 
 
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class KK_ServerApp {
 
 	public void startKnockKnock() {
 			
-		listenForConnections = true;
+		System.out.println("listenForConnections = " + listenForConnections);
 		
 		// create socket server and wait for connection requests
 		try 
@@ -76,10 +76,13 @@ public class KK_ServerApp {
 					display("Knock Knock client connected on port " + port + " ");
 				}
 				clientConnectCount++;
+//				addClientConnections();	// RB:
+				
+				
 
 				
 				new KK_ServerMultiThread(serverSocket.accept()).start();
-				addClientConnections();
+
 
 				
 				// if I was asked to stop
@@ -123,7 +126,11 @@ public class KK_ServerApp {
 	
 	public void addClientConnections() throws IOException {
 		KK_ClientGUI_App singleClient = new KK_ClientGUI_App();
+		System.out.println("addClientConnections()");
 		connectedClientList.add(singleClient);
+		for(int i = 0; i < connectedClientList.size(); ++i){
+			System.out.println("!!! Client Connection:: " + connectedClientList.get(i));
+		}
 	}
 	
 	public void removeClientConnections() throws IOException {
@@ -168,6 +175,17 @@ public class KK_ServerApp {
 		else
 			serverGUI.appendEvent(time + "\n");
 	}
+	
+	///////Getters//Setters///////
+	
+	public boolean isListenForConnections() {
+		return listenForConnections;
+	}
+
+	public void setListenForConnections(boolean listenForConnections) {
+		this.listenForConnections = listenForConnections;
+	}
+
 
 }
 

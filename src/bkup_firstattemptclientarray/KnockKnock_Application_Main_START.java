@@ -1,4 +1,4 @@
-package bkup_failed;
+package bkup_firstattemptclientarray;
 // UCSD Java IV - Assignment 3
 
 import javax.swing.JButton;
@@ -144,8 +144,10 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				// starts client application
 				try {
 					
-					shutdownClient = true;
-					System.out.println("Setting shutdownClient = " + shutdownClient);
+//					shutdownClient = true;
+//					System.out.println("Setting shutdownClient = " + shutdownClient);
+					//RB:
+					serverapp.setListenForConnections(false);
 					startClient();
 				} 
 				catch (IOException e) {

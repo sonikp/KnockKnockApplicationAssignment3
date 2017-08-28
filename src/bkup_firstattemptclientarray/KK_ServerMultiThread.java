@@ -1,4 +1,4 @@
-package bkup_failed;
+package bkup_firstattemptclientarray;
 
 
 import java.io.BufferedReader;
@@ -16,6 +16,8 @@ import java.net.Socket;
  */
 
 public class KK_ServerMultiThread extends Thread {
+	// RB:
+	private KK_ServerApp serverapp;
 	private Socket socket = null;
 	
 	/**
@@ -38,6 +40,16 @@ public class KK_ServerMultiThread extends Thread {
 	 */
 
 	public void run() {
+		// RB:
+		
+		System.out.println("has this happened?");
+		
+//		try {
+//			serverapp.addClientConnections();
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 
 		try {
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
