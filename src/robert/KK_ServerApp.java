@@ -1,14 +1,11 @@
-package bkup_firstattemptclientarray;
+package robert;
 
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-
-
 
 /**
  * KK_ServerApp is the application logic for the main KnockKnock application.
@@ -28,7 +25,6 @@ public class KK_ServerApp {
 	private int port = 4444;
 	private boolean listenForConnections;
 	private ServerSocket serverSocket = null;
-	private ArrayList<KK_ClientGUI_App> connectedClientList;
 	
 	/**
 	 * KK_ServerApp constructor that receive the port to listen to for connection as parameter in console
@@ -53,7 +49,7 @@ public class KK_ServerApp {
 
 	public void startKnockKnock() {
 			
-		System.out.println("listenForConnections = " + listenForConnections);
+		listenForConnections = true;
 		
 		// create socket server and wait for connection requests
 		try 
@@ -76,15 +72,9 @@ public class KK_ServerApp {
 					display("Knock Knock client connected on port " + port + " ");
 				}
 				clientConnectCount++;
-//				addClientConnections();	// RB:
-				
-				
 
 				
 				new KK_ServerMultiThread(serverSocket.accept()).start();
-
-
-
 				
 				// if I was asked to stop
 				if(!listenForConnections)
@@ -93,10 +83,8 @@ public class KK_ServerApp {
 			}
 			// Stop the server, close the serverSocket
 			try {
-				
-				removeClientConnections();
-				
 				serverSocket.close();
+
 			}
 			catch(Exception e) {
 				display("Exception closing the server and clients: " + e);
@@ -122,27 +110,6 @@ public class KK_ServerApp {
 		} catch (IOException e) {
 			System.err.println("Could not listen on port: 4444.");
 			System.exit(-1);
-		}
-	}
-	
-	public void addClientConnections() throws IOException {
-		KK_ClientGUI_App singleClient = new KK_ClientGUI_App();
-		System.out.println("addClientConnections()");
-		connectedClientList.add(singleClient);
-		for(int i = 0; i < connectedClientList.size(); ++i){
-			System.out.println("!!! Client Connection:: " + connectedClientList.get(i));
-		}
-	}
-	
-	public void removeClientConnections() throws IOException {
-		for(int i = 0; i < connectedClientList.size(); ++i){
-			KK_ClientGUI_App clientToClose = connectedClientList.get(i);
-			try {
-				clientToClose.closeConnection();
-			}
-			finally  {
-				
-			}
 		}
 	}
 	
@@ -176,17 +143,6 @@ public class KK_ServerApp {
 		else
 			serverGUI.appendEvent(time + "\n");
 	}
-	
-	///////Getters//Setters///////
-	
-	public boolean isListenForConnections() {
-		return listenForConnections;
-	}
-
-	public void setListenForConnections(boolean listenForConnections) {
-		this.listenForConnections = listenForConnections;
-	}
-
 
 }
 
