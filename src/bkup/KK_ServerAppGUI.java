@@ -87,12 +87,18 @@ public class KK_ServerAppGUI extends JFrame implements ActionListener {
 
 	}
 	
-	// append event message to the JTextArea at the end position
+	/**
+	 * Appends event message to the JTextArea at the end position
+	 * 
+	 * @param str string to append to the JTextArea
+	 */
 	void appendEvent(String str) {
 		event.append(str);
 		event.setCaretPosition(event.getText().length() - 1);	
 		
 	}
+	
+	
 	/**
 	 * Action performed when start or stop where clicked.
 	 * If running we have to stop.
@@ -130,8 +136,6 @@ public class KK_ServerAppGUI extends JFrame implements ActionListener {
 	 * @author notroot
 	 *
 	 */
-
-
 	class ServerRunning extends Thread {
 		public void run() {
 			server.startKnockKnock();
@@ -141,6 +145,5 @@ public class KK_ServerAppGUI extends JFrame implements ActionListener {
 			server = null;
 		}
 	}
-
 }
 

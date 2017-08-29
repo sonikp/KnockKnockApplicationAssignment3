@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -83,7 +82,7 @@ public class KnockKnock_Application_Main_START extends JFrame {
 		
 		startClientThreadJPanel = new JPanel(new GridLayout(2, 2, 5, 5));
 		startClientJButton = new JButton("Start Client");
-		stopClientJButton = new JButton("Stop Client");	//Logout
+		stopClientJButton = new JButton("Stop All Clients");	
 		
 		setLayout(new GridLayout(2, 1, 10, 10));
 		
@@ -136,8 +135,7 @@ public class KnockKnock_Application_Main_START extends JFrame {
 					startClient();
 				} catch (IOException e) {
 					e.printStackTrace();
-				}
-				
+				}			
 			}
 		}); // end anonymous inner class, and end call to addActionListener
 		
@@ -145,23 +143,9 @@ public class KnockKnock_Application_Main_START extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				System.out.println("Client STOP button pressed");
-				
+
+				// stops and closes all the client applications
 				stopClients();
-
-				
-				
-				
-				// starts client application
-//				try {
-//					
-//					shutdownClient = true;
-//					startClient();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-
-				
 
 			}
 		}); // end anonymous inner class, and end call to addActionListener
@@ -195,14 +179,14 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				public void run() {
 					try {
 						
-						System.out.println("start client!!!!");
+						// creates the client GUI object
 						kkclientapp = new KK_ClientGUI_App();
+
+						// adds the client to the object arrayList
 						connectedClientList.add(kkclientapp);
-						System.out.println("start client@@@@");
+
+						// communicates with the server to get the jokes
 						kkclientapp.getJoke();
-						
-						
-						
 
 					} catch (IOException e) {
 						System.err.println("Unable to process client request");
@@ -210,35 +194,6 @@ public class KnockKnock_Application_Main_START extends JFrame {
 					}
 				}
 			};
-
-
-		}
-		else {
-			System.out.println("!!!enter shutdown mode, shutdownServer = " );	//+ shutdownServer
-			
-//			clientProcessingPool.shutdown();
-			
-			try {
-				
-//				kkclientapp.closeConnection();
-
-//				clientProcessingPool.shutdown();
-//				threadServerController.closeConnections();
-//				System.out.println("replaced serverSocket.close()");
-
-//				try {
-////					serverSocket.close();
-//				}
-//				catch (SocketException ex) {
-//					System.out.println("enter printstacktrace()");
-//					ex.printStackTrace();
-//				}
-
-			}
-			finally {
-				
-				// currently empty
-			}
 		}
 		
 		clientThread = new Thread(clientTask) {
@@ -252,18 +207,22 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				}
 			}
 		};
+		
+		// starts the client thread
 		clientThread.start();
+		// adds each client thread to the thread arrayList
 		clientThreadList.add(clientThread);
-
 	} 
 	
+	/**
+	 * stopClients() stops all the clients by stepping through the arraylist
+	 * using the enhanced for loop method and calling interrupt on each thread object
+	 */
 	public void stopClients() {
 		
 		for (Thread cThread : clientThreadList   ) {
-			cThread.interrupt();
-			
-		}
-		
+			cThread.interrupt();			
+		}		
 	}
 	
 	/**

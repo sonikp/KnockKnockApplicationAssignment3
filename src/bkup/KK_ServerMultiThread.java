@@ -15,7 +15,6 @@ import java.net.Socket;
  * @author notroot
  *
  */
-
 public class KK_ServerMultiThread extends Thread {
 	private Socket socket = null;
 	
@@ -37,7 +36,6 @@ public class KK_ServerMultiThread extends Thread {
 	 * to create the input and output stream buffers
 	 * 
 	 */
-
 	public void run() {
 
 		try {
