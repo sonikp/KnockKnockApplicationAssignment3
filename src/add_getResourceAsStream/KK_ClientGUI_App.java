@@ -1,4 +1,4 @@
-package bkup_resourceasstream;
+package add_getResourceAsStream;
 
 
 import java.awt.BorderLayout;

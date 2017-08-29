@@ -197,7 +197,8 @@ public class KnockKnock_Application_Main_START extends JFrame {
 		}
 		
 		clientThread = new Thread(clientTask) {
-			// assign interrupts to each of the client objects
+			
+			// Anonymous inner class, assign interrupts to each of the client objects
 			public void interrupt () {
 				// step through the list of clients and kill each one, completing the entire list
 				for( KK_ClientGUI_App app : connectedClientList ) {
@@ -206,7 +207,7 @@ public class KnockKnock_Application_Main_START extends JFrame {
 					
 				}
 			}
-		};
+		};	// end anonymous inner class
 		
 		// starts the client thread
 		clientThread.start();
