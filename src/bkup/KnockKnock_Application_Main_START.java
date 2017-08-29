@@ -1,16 +1,21 @@
 package bkup;
-// UCSD Java IV - Assignment 3
+
+
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Color;
-import java.io.IOException;
+
+
 
 /**
  * UCSD Java IV - Assignment 3
@@ -46,7 +51,9 @@ public class KnockKnock_Application_Main_START extends JFrame {
 	private final JButton stopClientJButton;	
 	
 	private boolean shutdownClient;
-	private Thread serverThread;
+	private Thread clientThread;
+	private List<KK_ClientGUI_App> connectedClientList;
+	private List<Thread> clientThreadList;
 	
 	
 	/**
@@ -66,6 +73,9 @@ public class KnockKnock_Application_Main_START extends JFrame {
 	public KnockKnock_Application_Main_START() throws IOException {
 		
 		super("KnockKnock Launch Application");
+		
+		connectedClientList = new ArrayList<KK_ClientGUI_App>();
+		clientThreadList = new ArrayList<Thread>();
 		
 		startServerJPanel = new JPanel(new GridLayout(2, 2, 5, 5));
 		startServerJButton = new JButton("Start Server");
@@ -136,7 +146,11 @@ public class KnockKnock_Application_Main_START extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				System.out.println("Client STOP button pressed");
-				System.out.println(event);	
+				
+				stopClients();
+
+				
+				
 				
 				// starts client application
 //				try {
@@ -181,7 +195,14 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				public void run() {
 					try {
 						
+						System.out.println("start client!!!!");
 						kkclientapp = new KK_ClientGUI_App();
+						connectedClientList.add(kkclientapp);
+						System.out.println("start client@@@@");
+						kkclientapp.getJoke();
+						
+						
+						
 
 					} catch (IOException e) {
 						System.err.println("Unable to process client request");
@@ -199,7 +220,7 @@ public class KnockKnock_Application_Main_START extends JFrame {
 			
 			try {
 				
-				kkclientapp.closeConnection();
+//				kkclientapp.closeConnection();
 
 //				clientProcessingPool.shutdown();
 //				threadServerController.closeConnections();
@@ -219,11 +240,31 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				// currently empty
 			}
 		}
-
-		serverThread = new Thread(clientTask);
-		serverThread.start();
+		
+		clientThread = new Thread(clientTask) {
+			// assign interrupts to each of the client objects
+			public void interrupt () {
+				// step through the list of clients and kill each one, completing the entire list
+				for( KK_ClientGUI_App app : connectedClientList ) {
+					
+					app.dispose(); 
+					
+				}
+			}
+		};
+		clientThread.start();
+		clientThreadList.add(clientThread);
 
 	} 
+	
+	public void stopClients() {
+		
+		for (Thread cThread : clientThreadList   ) {
+			cThread.interrupt();
+			
+		}
+		
+	}
 	
 	/**
 	 * Main Method 'STARTS' the execution of the KnockKnock Application.

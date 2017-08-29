@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * KK_ServerApp is the application logic for the main KnockKnock application.
  * This starts the KnockKnock application, sets up the listening port, the 
- * serverSockets for accepting the client connections and the applicatin GUI
+ * serverSockets for accepting the client connections and the application GUI
  * object. 
  * 
  * @author notroot

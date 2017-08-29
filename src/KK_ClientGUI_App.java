@@ -45,8 +45,6 @@ public class KK_ClientGUI_App extends JFrame  {
 	private final ExecutorService clientProcessingPool;
 	
 	
-	
-	
 	/**
 	 * Constructor creates the client thread pool which will 
 	 * hold and execute the interactions as threads. The constructor 
@@ -91,14 +89,8 @@ public class KK_ClientGUI_App extends JFrame  {
         setVisible(true);
         setLocation(1100, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	
-        System.out.println("finished GUI");
         
-    	connectToServer();
-    	System.out.println("$$$connectToServer();");
-//    	getJoke();
-    	System.out.println("$$$$ getJoke()");
-    	
+    	connectToServer();   	
     }
     
     /**
@@ -151,10 +143,8 @@ public class KK_ClientGUI_App extends JFrame  {
     			System.out.println("Client: " + fromUser);
     			displayArea.append("Client: " + fromUser  + "\n");
     			writeOutput.println(fromUser);
-    		}
-    
+    		}   
     	}
-
     }
     /**
      * closeConnection() method closes the connection by closing
@@ -221,22 +211,8 @@ public class KK_ClientGUI_App extends JFrame  {
 				}
 			};
 		}
-		else {
-			System.out.println("!!!enter shutdown mode, shutdownServer = " + shutdownServer);
-
-			try {
-
-				clientProcessingPool.shutdown();
-			}
-
-			finally {			
-				// currently empty
-			}
-		}
 
 		serverThread = new Thread(clientTask);
 		serverThread.start();
-
-	} 
-	
+	} 	
 }
