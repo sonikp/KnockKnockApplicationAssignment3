@@ -1,3 +1,4 @@
+package bkup_resourceasstream;
 
 
 
@@ -6,6 +7,7 @@ import java.security.SecureRandom;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
@@ -47,14 +49,39 @@ public class KK_ServerProtocol {
      * delimiters, are arranged into a double array for both CLUE's and 
      * ANSWERS
      * @throws FileNotFoundException when properties file is not found
-     * @throws IOException when input / output issus
+     * @throws IOException when input / output issues
      */
     public KK_ServerProtocol() throws FileNotFoundException, IOException {
  
     	//get properties file
     	Properties prop = new Properties();
-    	prop.load(new FileInputStream("KnockKnockJokesData.properties"));
+    	InputStream input = null;
 
+    	try {
+    		String filename = "KnockKnockJokesData.properties";
+    		input = getClass().getClassLoader().getResourceAsStream(filename);
+//    		input = KK_ServerProtocol.class.getClassLoader().getResourceAsStream("KnockKnockJokesData.properties");
+
+    		if(input==null){
+    			System.out.println("Sorry, unable to find " + filename);
+    			return;
+    		}	
+//    		prop.load(input);
+    		prop.load(getClass().getClassLoader().getResourceAsStream(filename));
+    	}
+    	catch (IOException ex) {
+    		ex.printStackTrace();
+    	}
+    	finally {
+    		if(input!=null){
+    			try {
+    				input.close();
+    			} catch (IOException e) {
+    				e.printStackTrace();
+    			}
+    		}
+    	}
+    	
     	//get two dimensional array from the properties file that has been delineated
     	knockknockInfo = fetchArrayFromPropFile("knockknockInfo", prop);
     }
