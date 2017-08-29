@@ -1,20 +1,16 @@
-
-
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+package TBD.bkup_morning;
+// UCSD Java IV - Assignment 3
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-
-
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.io.IOException;
 
 /**
  * UCSD Java IV - Assignment 3
@@ -36,8 +32,9 @@ public class KnockKnock_Application_Main_START extends JFrame {
 	// added: The serializable class KK_App_Main_START does not declare a static final serialVersionUID field of type long
 	
 	// application objects
-	private KK_ServerAppGUI serverapp; 
+	private KK_ServerAppGUI serverappGUI; 
 	private KK_ClientGUI_App kkclientapp;
+	private KK_ServerApp serverapp;
 	
 	// swing components starting the Knock Knock server application
 	private final JPanel startServerJPanel;
@@ -50,9 +47,7 @@ public class KnockKnock_Application_Main_START extends JFrame {
 	private final JButton stopClientJButton;	
 	
 	private boolean shutdownClient;
-	private Thread clientThread;
-	private List<KK_ClientGUI_App> connectedClientList;
-	private List<Thread> clientThreadList;
+	private Thread serverThread;
 	
 	
 	/**
@@ -72,9 +67,6 @@ public class KnockKnock_Application_Main_START extends JFrame {
 	public KnockKnock_Application_Main_START() throws IOException {
 		
 		super("KnockKnock Launch Application");
-		
-		connectedClientList = new ArrayList<KK_ClientGUI_App>();
-		clientThreadList = new ArrayList<Thread>();
 		
 		startServerJPanel = new JPanel(new GridLayout(2, 2, 5, 5));
 		startServerJButton = new JButton("Start Server");
@@ -103,8 +95,8 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				startClientJButton.setEnabled(true);
 				stopClientJButton.setEnabled(true);
 				
-				serverapp = new KK_ServerAppGUI(4444);
-				serverapp.serverStartStop();				
+				serverappGUI = new KK_ServerAppGUI(4444);
+				serverappGUI.serverStartStop();				
 			}
 		});	// end anonymous inner class, and end call to addActionListener
 		
@@ -116,7 +108,7 @@ public class KnockKnock_Application_Main_START extends JFrame {
 			
 				startClientJButton.setEnabled(false);
 				stopClientJButton.setEnabled(false);
-				serverapp.serverStartStop();				
+				serverappGUI.serverStartStop();				
 			}
 		});	// end anonymous inner class, and end call to addActionListener
 		
@@ -132,6 +124,8 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				
 				// starts client application
 				try {
+					shutdownClient = false;
+					System.out.println("Setting shutdownClient = false");
 					startClient();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -145,20 +139,21 @@ public class KnockKnock_Application_Main_START extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				System.out.println("Client STOP button pressed");
-				
-				stopClients();
-
-				
-				
+				System.out.println(event);	
 				
 				// starts client application
-//				try {
-//					
-//					shutdownClient = true;
-//					startClient();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
+				try {
+					
+					shutdownClient = true;
+					System.out.println("Setting shutdownClient = " + shutdownClient);
+					startClient();
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				finally {
+					
+				}
 
 				
 
@@ -182,11 +177,13 @@ public class KnockKnock_Application_Main_START extends JFrame {
 	 * 
 	 */
 	
+	@SuppressWarnings({ "deprecation", "static-access" })
 	public void startClient() throws IOException {
 
 		Runnable clientTask = null;
-
+		System.out.println("entering runnable, shutdownClient = " + shutdownClient);
 		if (!shutdownClient) {
+			System.out.println("inside runnable, shutdownClient = " + shutdownClient);
 
 			clientTask = new Runnable() {
 
@@ -194,14 +191,8 @@ public class KnockKnock_Application_Main_START extends JFrame {
 				public void run() {
 					try {
 						
-						System.out.println("start client!!!!");
 						kkclientapp = new KK_ClientGUI_App();
-						connectedClientList.add(kkclientapp);
-						System.out.println("start client@@@@");
-						kkclientapp.getJoke();
-						
-						
-						
+						//Robert: I had to put this here to create a client object
 
 					} catch (IOException e) {
 						System.err.println("Unable to process client request");
@@ -213,14 +204,34 @@ public class KnockKnock_Application_Main_START extends JFrame {
 
 		}
 		else {
-			System.out.println("!!!enter shutdown mode, shutdownServer = " );	//+ shutdownServer
+			System.out.println("!!!enter shutdown mode, shutdownClient = " + shutdownClient );	//+ shutdownServer
 			
-//			clientProcessingPool.shutdown();
+			serverapp.removeClientConnections();
+			
+			
+			
+			
+			// RB: I need to end runnable
+			
+//			Thread.currentThread().interrupt();
+//			((Thread) clientTask).interrupt();
+//			serverThread.currentThread().interrupt();
+//			kkclientapp.closeConnection();
+			
+			
+
 			
 			try {
 				
+				System.out.println("shutdown mode try { statement");
+				
+				// RB: getting a null pointer exception calling kkclientapp. = because no object
+				// this creates another object
+//				kkclientapp = new KK_ClientGUI_App();
 //				kkclientapp.closeConnection();
-
+				
+				
+				// RB: very old code 
 //				clientProcessingPool.shutdown();
 //				threadServerController.closeConnections();
 //				System.out.println("replaced serverSocket.close()");
@@ -235,35 +246,17 @@ public class KnockKnock_Application_Main_START extends JFrame {
 
 			}
 			finally {
-				
+				System.out.println("shutdown mode RETURN");
+				System.exit(0);
+				return;
 				// currently empty
 			}
 		}
-		
-		clientThread = new Thread(clientTask) {
-			// assign interrupts to each of the client objects
-			public void interrupt () {
-				// step through the list of clients and kill each one, completing the entire list
-				for( KK_ClientGUI_App app : connectedClientList ) {
-					
-					app.dispose(); 
-					
-				}
-			}
-		};
-		clientThread.start();
-		clientThreadList.add(clientThread);
+		System.out.println("start serverThread");
+		serverThread = new Thread(clientTask);	//clientTask
+		serverThread.start();
 
 	} 
-	
-	public void stopClients() {
-		
-		for (Thread cThread : clientThreadList   ) {
-			cThread.interrupt();
-			
-		}
-		
-	}
 	
 	/**
 	 * Main Method 'STARTS' the execution of the KnockKnock Application.

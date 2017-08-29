@@ -1,4 +1,4 @@
-
+package TBD.bkup;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -92,12 +92,8 @@ public class KK_ClientGUI_App extends JFrame  {
         setLocation(1100, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
-        System.out.println("finished GUI");
-        
     	connectToServer();
-    	System.out.println("$$$connectToServer();");
-//    	getJoke();
-    	System.out.println("$$$$ getJoke()");
+    	getJoke();
     	
     }
     
@@ -168,7 +164,6 @@ public class KK_ClientGUI_App extends JFrame  {
         readInput.close();
         strInput.close();
         kkSocket.close();
-        
     }
 	
     /**

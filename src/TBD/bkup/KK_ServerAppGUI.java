@@ -1,4 +1,4 @@
-package bkup_firstattemptclientarray;
+package TBD.bkup;
 
 
 import java.awt.BorderLayout;
@@ -133,8 +133,6 @@ public class KK_ServerAppGUI extends JFrame implements ActionListener {
 
 	class ServerRunning extends Thread {
 		public void run() {
-			//RB:
-			server.setListenForConnections(true);
 			server.startKnockKnock();
 			// the server failed
 			stopStart.setText("Start");

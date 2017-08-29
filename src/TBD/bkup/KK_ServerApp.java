@@ -1,11 +1,14 @@
-
+package TBD.bkup;
 
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+
+import TBD.bkup_firstattemptclientarray.KK_ClientGUI_App;
 
 /**
  * KK_ServerApp is the application logic for the main KnockKnock application.
@@ -25,6 +28,8 @@ public class KK_ServerApp {
 	private int port = 4444;
 	private boolean listenForConnections;
 	private ServerSocket serverSocket = null;
+	// RB:
+	private ArrayList<KK_ClientGUI_App> connectedClientList;
 	
 	/**
 	 * KK_ServerApp constructor that receive the port to listen to for connection as parameter in console
@@ -75,6 +80,7 @@ public class KK_ServerApp {
 
 				
 				new KK_ServerMultiThread(serverSocket.accept()).start();
+//				addClientConnections();
 				
 				// if I was asked to stop
 				if(!listenForConnections)
@@ -112,6 +118,27 @@ public class KK_ServerApp {
 			System.exit(-1);
 		}
 	}
+	
+	// RB:
+	public void addClientConnections() throws IOException {
+		KK_ClientGUI_App singleClient = new KK_ClientGUI_App();
+		connectedClientList.add(singleClient);
+	}
+	
+	public void removeClientConnections() throws IOException {
+		for(int i = 0; i < connectedClientList.size(); ++i){
+			KK_ClientGUI_App clientToClose = connectedClientList.get(i);
+			try {
+				clientToClose.closeConnection();
+			}
+			finally  {
+				
+			}
+		}
+	}
+	
+	
+	
 	
 	/**
 	 * For the GUI to stop the server. Creates a port to listen back to itself. I know 
