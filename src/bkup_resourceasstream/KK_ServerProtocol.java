@@ -52,22 +52,24 @@ public class KK_ServerProtocol {
      * @throws IOException when input / output issues
      */
     public KK_ServerProtocol() throws FileNotFoundException, IOException {
- 
+    	
+    	//https://stackoverflow.com/questions/333363/loading-a-properties-file-from-java-package
+    	
     	//get properties file
     	Properties prop = new Properties();
     	InputStream input = null;
 
     	try {
     		String filename = "KnockKnockJokesData.properties";
-    		input = getClass().getClassLoader().getResourceAsStream(filename);
-//    		input = KK_ServerProtocol.class.getClassLoader().getResourceAsStream("KnockKnockJokesData.properties");
+//    		input = getClass().getClassLoader().getResourceAsStream(filename);
+    		input = KK_ServerProtocol.class.getClassLoader().getResourceAsStream("/src/main/resources/KnockKnockJokesData.properties");
 
     		if(input==null){
     			System.out.println("Sorry, unable to find " + filename);
     			return;
     		}	
-//    		prop.load(input);
-    		prop.load(getClass().getClassLoader().getResourceAsStream(filename));
+    		prop.load(input);
+//    		prop.load(getClass().getClassLoader().getResourceAsStream(filename));
     	}
     	catch (IOException ex) {
     		ex.printStackTrace();
