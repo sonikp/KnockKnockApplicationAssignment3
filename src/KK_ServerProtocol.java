@@ -35,11 +35,11 @@ public class KK_ServerProtocol {
     private static final int SENTCLUE = 2;
     private static final int ANOTHER = 3;
 
-    private static final int NUMJOKES = 19;
+    private static final int NUMJOKES = 18;
 
     private int state = WAITING;
     private SecureRandom rand = new SecureRandom();
-    private int currentJoke = rand.nextInt(19);			
+    private int currentJoke = rand.nextInt(18);			
      
     /**
      * Constructor uses a properties file for storing and sharing the
@@ -112,7 +112,7 @@ public class KK_ServerProtocol {
                 state = SENTKNOCKKNOCK;
             }
         } else if (state == ANOTHER) {
-        	currentJoke = rand.nextInt(19);
+        	currentJoke = rand.nextInt(18);
         	System.out.println("randomizeJoke: " + currentJoke);
             if (theInput.equalsIgnoreCase("y")) {
                 theOutput = "Knock! Knock!";
